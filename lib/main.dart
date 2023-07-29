@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:todo_case/controller/home_controller.dart';
+import 'package:todo_case/controller/login_controller.dart';
+import 'package:todo_case/widgets/screens/home_screen.dart';
 import 'package:todo_case/widgets/screens/login_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  Get.put(LoginController());
+  Get.put(HomeController());
+  LoginController loginController = LoginController();
+  await loginController.checkLogin();
+
+  runApp(MyApp(loginController: loginController));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final LoginController loginController;
+  const MyApp({super.key, required this.loginController});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      debugShowCheckedModeBanner: false,
+      initialRoute: loginController.isLoggedIn.value ? '/home' : '/',
+      getPages: [
+        GetPage(name: '/', page: () => LoginScreen()),
+        GetPage(name: '/home', page: () => HomeScreen()),
+      ],
     );
   }
 }

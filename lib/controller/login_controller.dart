@@ -1,0 +1,72 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:todo_case/utils/model/user.dart';
+import 'package:http/http.dart' as http;
+
+class LoginController extends GetxController {
+  final storage = const FlutterSecureStorage();
+  final String baseUrl = "https://reqres.in/api";
+
+  final RxBool isLoggedIn = false.obs;
+  final Rx<User?> user = Rx<User?>(null);
+
+  RxBool passwordHidden = true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkLogin();
+  }
+
+  Future<void> checkLogin() async {
+    String? token = await storage.read(key: "token");
+    isLoggedIn.value = token != null;
+    if (isLoggedIn.value) {
+      String? userJson = await storage.read(key: "user");
+      if (userJson != null) {
+        user.value = User.fromJson(json.decode(userJson));
+      }
+    }
+  }
+
+  Future<void> login(String email, String password) async {
+    // Fake API request using reqres.in
+    final response = await http.post(Uri.parse("$baseUrl/login"), body: {"email": email, "password": password});
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final token = data['token'];
+      final userJson = json.encode({"email": email, "password": password});
+
+      await storage.write(key: "token", value: token);
+      await storage.write(key: "user", value: userJson);
+
+      isLoggedIn.value = true;
+      user.value = User(email: email, password: password);
+
+      showSnackbar(isSuccess: true);
+      Get.offAllNamed('/home');
+    } else {
+      showSnackbar(isSuccess: false);
+    }
+  }
+
+  Future<void> logout() async {
+    await storage.deleteAll();
+    isLoggedIn.value = false;
+    user.value = null;
+    Get.offAllNamed('/login');
+  }
+
+  void showSnackbar({bool isSuccess = false}) {
+    Get.snackbar(
+      isSuccess ? "Başarılı" : "Başarısız",
+      isSuccess ? "Başarılı bir şekilde giriş yapıldı." : "Giriş denemesi başarısız oldu.",
+      backgroundColor: isSuccess ? Colors.green : Colors.red,
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+}
