@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_case/controller/home_controller.dart';
 import 'package:todo_case/controller/login_controller.dart';
+import 'package:todo_case/controller/user_list_controller.dart';
 import 'package:todo_case/widgets/screens/home_screen.dart';
 import 'package:todo_case/widgets/screens/login_screen.dart';
 
 Future<void> main() async {
   Get.put(LoginController());
   Get.put(HomeController());
+  Get.put(UserListController());
   LoginController loginController = LoginController();
   await loginController.checkLogin();
 

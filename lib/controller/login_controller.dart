@@ -2,15 +2,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:todo_case/utils/model/user.dart';
+import 'package:todo_case/utils/constants.dart';
+import 'package:todo_case/utils/model/login.dart';
 import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController {
+  //for authentication
   final storage = const FlutterSecureStorage();
-  final String baseUrl = "https://reqres.in/api";
-
   final RxBool isLoggedIn = false.obs;
-  final Rx<User?> user = Rx<User?>(null);
+
+  final Rx<Login?> user = Rx<Login?>(null);
 
   RxBool passwordHidden = true.obs;
 
@@ -26,14 +27,14 @@ class LoginController extends GetxController {
     if (isLoggedIn.value) {
       String? userJson = await storage.read(key: "user");
       if (userJson != null) {
-        user.value = User.fromJson(json.decode(userJson));
+        user.value = Login.fromJson(json.decode(userJson));
       }
     }
   }
 
   Future<void> login(String email, String password) async {
     // Fake API request using reqres.in
-    final response = await http.post(Uri.parse("$baseUrl/login"), body: {"email": email, "password": password});
+    final response = await http.post(Uri.parse("${Constants.baseUrl}/login"), body: {"email": email, "password": password});
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -44,7 +45,7 @@ class LoginController extends GetxController {
       await storage.write(key: "user", value: userJson);
 
       isLoggedIn.value = true;
-      user.value = User(email: email, password: password);
+      user.value = Login(email: email, password: password);
 
       showSnackbar(isSuccess: true);
       Get.offAllNamed('/home');

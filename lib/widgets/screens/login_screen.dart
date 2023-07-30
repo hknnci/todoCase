@@ -4,7 +4,6 @@ import 'package:todo_case/controller/login_controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
   final GlobalKey<FormState> formKey = GlobalKey();
-  final LoginController loginController = Get.find();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -45,7 +44,7 @@ class LoginScreen extends GetView<LoginController> {
                 Obx(
                   () => TextFormField(
                     controller: passwordController,
-                    obscureText: loginController.passwordHidden.value,
+                    obscureText: controller.passwordHidden.value,
                     keyboardType: TextInputType.visiblePassword,
                     validator: (value) {
                       return (value == null || value.isEmpty) ? 'Lütfen Şifrenizi Girin' : null;
@@ -55,10 +54,10 @@ class LoginScreen extends GetView<LoginController> {
                       prefixIcon: const Icon(Icons.password_outlined),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          loginController.passwordHidden.value ? Icons.visibility : Icons.visibility_off,
+                          controller.passwordHidden.value ? Icons.visibility : Icons.visibility_off,
                           color: Theme.of(context).primaryColorDark,
                         ),
-                        onPressed: () => loginController.passwordHidden.value = !loginController.passwordHidden.value,
+                        onPressed: () => controller.passwordHidden.value = !controller.passwordHidden.value,
                       ),
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -75,7 +74,7 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                       onPressed: () async {
                         if (formKey.currentState?.validate() ?? false) {
-                          await loginController.login(emailController.text, passwordController.text);
+                          await controller.login(emailController.text, passwordController.text);
                         }
                       },
                       child: const Text('Giriş Yap'),
