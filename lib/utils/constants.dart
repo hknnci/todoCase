@@ -3,8 +3,8 @@ class Constants {
   static String baseUrl = "https://reqres.in/api";
   static String avatar = "avatar";
   static String email = "email";
-  static String firstName = "firstName";
+  static String firstName = "first_name";
   static String id = "id";
-  static String lastName = "lastName";
+  static String lastName = "last_name";
   static String password = "password";
 }
