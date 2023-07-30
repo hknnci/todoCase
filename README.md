@@ -24,7 +24,7 @@ This is a todo application that allows users to manage their tasks and view a li
 - flutter_secure_storage
 - uuid
 
-## Getting Started
+# Getting Started
 
 - Clone the project => `git clone https://github.com/user/todolist-app.git`
 - Navigate to the project folder => `cd todolist-app`
