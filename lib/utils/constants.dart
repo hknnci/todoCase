@@ -5,6 +5,8 @@ class Constants {
   static String email = "email";
   static String firstName = "first_name";
   static String id = "id";
+  static String isCompleted = "isCompleted";
   static String lastName = "last_name";
+  static String title = "title";
   static String password = "password";
 }

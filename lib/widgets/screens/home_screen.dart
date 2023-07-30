@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_case/controller/home_controller.dart';
 import 'package:todo_case/controller/login_controller.dart';
+import 'package:todo_case/widgets/screens/todo_list_screen.dart';
 import 'package:todo_case/widgets/screens/user_list_screen.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -11,7 +12,7 @@ class HomeScreen extends GetView<HomeController> {
 
   final List<Widget> screens = [
     const UserListScreen(),
-    //TodoListScreen(),
+    TodoListScreen(),
   ];
 
   @override
@@ -40,7 +41,7 @@ class HomeScreen extends GetView<HomeController> {
               label: 'Kullanıcı Listesi',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.adjust),
+              icon: Icon(Icons.check_circle),
               label: 'Yapılacaklar Listesi',
             ),
           ],
