@@ -16,7 +16,7 @@ class LoginScreen extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFcecfd6),
+      backgroundColor: const Color(0xFFdbd0b2),
       body: Center(
         child: Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -91,8 +91,12 @@ class LoginScreen extends GetView<LoginController> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(50),
+                          minimumSize: const Size.fromHeight(55),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                          ),
                         ),
                         onPressed: () async {
                           controller.onPressLogin(

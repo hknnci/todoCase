@@ -27,6 +27,20 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFFdbd0b2),
+          centerTitle: true,
+          titleTextStyle: TextStyle(color: Color(0xFFA67926), fontSize: 20, fontWeight: FontWeight.w500),
+          iconTheme: IconThemeData(color: Color(0xFFA67926)),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: const Color(0xFFdbd0b2),
+          elevation: 10,
+          selectedLabelStyle: const TextStyle(color: Color(0xFFA67926), fontSize: 14.0),
+          unselectedLabelStyle: TextStyle(color: Colors.grey[600], fontSize: 12.0),
+          selectedItemColor: const Color(0xFFA67926),
+          unselectedItemColor: Colors.grey[600],
+        ),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: loginController.isLoggedIn.value ? '/home' : '/',
