@@ -14,6 +14,7 @@ class LoginController extends GetxController {
   final Rx<Login?> user = Rx<Login?>(null);
 
   RxBool passwordHidden = true.obs;
+  final RxBool isLoggingIn = false.obs;
 
   @override
   void onInit() {
@@ -33,8 +34,10 @@ class LoginController extends GetxController {
   }
 
   Future<void> login(String email, String password) async {
+    isLoggingIn.value = true;
     // Fake API request using reqres.in
-    final response = await http.post(Uri.parse("${Constants.baseUrl}/login"), body: {"email": email, "password": password});
+    final response =
+        await http.post(Uri.parse("${Constants.baseUrl}/login"), body: {"email": email, "password": password});
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -52,6 +55,7 @@ class LoginController extends GetxController {
     } else {
       showSnackbar(isSuccess: false);
     }
+    isLoggingIn.value = false;
   }
 
   Future<void> logout() async {
@@ -69,5 +73,15 @@ class LoginController extends GetxController {
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
     );
+  }
+
+  Future<void> onPressLogin(
+    String email,
+    String password, {
+    bool formKeyValidate = false,
+  }) async {
+    if (formKeyValidate) {
+      await login(email, password);
+    }
   }
 }
