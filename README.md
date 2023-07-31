@@ -26,8 +26,8 @@ This is a todo application that allows users to manage their tasks and view a li
 
 # Getting Started
 
-- Clone the project => `git clone https://github.com/user/todolist-app.git`
-- Navigate to the project folder => `cd todolist-app`
+- Clone the project => `git clone https://github.com/hknnci/todoCase.git`
+- Navigate to the project folder => `cd todoCase`
 - Install dependencies => `flutter pub get`
 - Run the app => `flutter run`
 
